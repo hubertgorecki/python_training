@@ -1,1 +1,1 @@
-# python_training
+Repozytorium na potrzeby kursu z podstaw Pythona.
