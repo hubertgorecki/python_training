@@ -1,5 +1,6 @@
 from selenium import webdriver
 
+
 class ApplicationGroup:
 
     def __init__(self):
