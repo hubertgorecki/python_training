@@ -1,15 +1,12 @@
 from selenium import webdriver
-
+from fixture.session import Sesja
 
 class ApplicationGroup:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
-
-    def wylogowanie(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
+        self.session = Sesja(self)
 
     def powrot_na_strone_z_lista_grup(self):
         wd = self.wd
@@ -35,17 +32,6 @@ class ApplicationGroup:
     def otwiera_strone_z_grupami(self):
         wd = self.wd
         wd.find_element_by_link_text("groups").click()
-
-    def zalogowanie(self, login, haslo):
-        wd = self.wd
-        self.otwarcie_strony_glownej()
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(login)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(haslo)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def otwarcie_strony_glownej(self):
         wd = self.wd
