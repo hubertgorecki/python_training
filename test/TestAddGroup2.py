@@ -14,11 +14,11 @@ def app(request):
 
 def test_add_group2(app):
     app.session.zalogowanie(login="admin", haslo="secret")
-    app.utworzenie_nowej_grupy(Group(nazwa="nowa2", naglowek="nowa2", stopka="nowa2nowa2"))
+    app.group.utworzenie_nowej_grupy(Group(nazwa="nowa2", naglowek="nowa2", stopka="nowa2nowa2"))
     app.session.wylogowanie()
 
 
 def test_add_group3(app):
     app.session.zalogowanie(login="admin", haslo="secret")
-    app.utworzenie_nowej_grupy(Group(nazwa="nowa grupa", naglowek="coscos", stopka="malecos"))
+    app.group.utworzenie_nowej_grupy(Group(nazwa="nowa grupa", naglowek="coscos", stopka="malecos"))
     app.session.wylogowanie()
