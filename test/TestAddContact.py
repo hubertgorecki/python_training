@@ -2,12 +2,13 @@
 
 import pytest
 from model.contact import Contact
-from fixture.application_contact import ApplicationContact
+# from fixture.application_contact import ApplicationContact
+from fixture.menager import Menager
 
 
 @pytest.fixture
 def app(request):
-    fixture = ApplicationContact()
+    fixture = Menager()
     request.addfinalizer(fixture.destroy)
     return fixture
 

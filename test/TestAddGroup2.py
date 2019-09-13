@@ -2,12 +2,13 @@
 
 import pytest
 from model.group import Group
-from fixture.application_group import ApplicationGroup
+# from fixture.application_group import ApplicationGroup
+from fixture.menager import Menager
 
 
 @pytest.fixture()
 def app(request):
-    fixture = ApplicationGroup()
+    fixture = Menager()
     request.addfinalizer(fixture.destroy)
     return fixture
 
