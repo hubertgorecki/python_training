@@ -12,7 +12,7 @@ class ApplicationGroup:
 
     def otwarcie_strony_glownej(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/group.php")
+        wd.get("http://localhost/addressbook/")
 
     def destroy(self):
         self.wd.quit()
