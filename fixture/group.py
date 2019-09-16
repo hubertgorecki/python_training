@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 class Grupy:
     def __init__(self, app):
@@ -23,6 +24,14 @@ class Grupy:
         # Submit - Tworzymy nową grupę
         wd.find_element_by_name("submit").click()
         self.powrot_na_strone_z_lista_grup()
+
+    def usuniecie_pierwszej_grupy(self):
+        wd = self.app.wd
+        self.otwiera_strone_z_grupami()
+        # szukamy pierwszej grupy i zaznaczamy
+        wd.find_element_by_name("selected[]").click()
+        # szukamy przycisku usuń i klikamy
+        wd.find_element_by_name("delete").click()
 
     def otwiera_strone_z_grupami(self):
         wd = self.app.wd
