@@ -5,7 +5,7 @@ from fixture.menager import Menager
 
 
 # scope = "session"  - jedno uruchomienie przegladarki i następnie uruchomienie testów.
-# Bez tego - każdy test = owarcie przegladarki co wydłuża czas.
+# Bez tego - każdy test = otwarcie przegladarki co wydłuża czas.
 @pytest.fixture(scope = "session")
 # Fixtura dla wszystkich testów. Dzięki temu nie musimy umieszczać oddzielnej fixtury w każdym tescie./
 def app(request):

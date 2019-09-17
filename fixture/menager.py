@@ -5,6 +5,7 @@ from fixture.session import Sesja
 from fixture.group import Grupy
 from fixture.contact import Kontakty
 
+
 class Menager:
 
     def __init__(self):
