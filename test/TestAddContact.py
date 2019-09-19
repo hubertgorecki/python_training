@@ -6,8 +6,9 @@ from model.contact import Contact
 def test_add_contact(app):
     app.session.zalogowanie(login="admin", haslo="secret")
     app.contact.wypelnij_dane_kontaktowe_i_zapisz(
-        Contact(imie="Alfred", imie2="Jonatan", nazwisko="Baran", inicjaly="AJB", firma="Google", zwrot="Prezes",
-                adres="Ukryta", tel_domowy="112 12 32", tel_komorkowy="234 432 123", tel_praca="098 765 432",
-                adres_mail="lkjh@pl.pl", adres_mail2="wsda.pl.pl", strona_domowa="auto.pl", dzien_urodzin="14",
-                miesiac_urodzin="9", rok_urodzenia="1982", alrternatywny_adres="brak"))
+        Contact(imie="Anna", imie2="Anka", nazwisko="Ankadaka", inicjaly="", firma="Japanaznajde",
+                zwrot="Jakiś",
+                adres="Jawna", tel_domowy="", tel_komorkowy="234 432 123", tel_praca="",
+                adres_mail="jjjjj@pl.pl", adres_mail2="JJJJJ.pl.pl", strona_domowa="", dzien_urodzin="1",
+                miesiac_urodzin="July", rok_urodzenia="1111", alrternatywny_adres=""))
     app.session.wylogowanie()
