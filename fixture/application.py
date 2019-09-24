@@ -6,7 +6,7 @@ from fixture.group import Grupy
 from fixture.contact import Kontakty
 
 
-class Menager:
+class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
@@ -14,6 +14,13 @@ class Menager:
         self.session = Sesja(self)
         self.group = Grupy(self)
         self.contact = Kontakty(self)
+
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
 
     def otwarcie_strony_glownej(self):
         wd = self.wd

@@ -22,27 +22,33 @@ class Grupy:
     def wypelnienie_formularza_danymi_grupy(self, group):
         wd = self.app.wd
         # Wypełniamy formularz danymi
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.nazwa)
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.naglowek)
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.stopka)
+        self.zmien_tresc_danego_pola("group_name", group.nazwa)
+        self.zmien_tresc_danego_pola("group_header", group.naglowek)
+        self.zmien_tresc_danego_pola("group_footer", group.stopka)
+
+    def zmien_tresc_danego_pola(self, nazwa_pola, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(nazwa_pola).click()
+            wd.find_element_by_name(nazwa_pola).clear()
+            wd.find_element_by_name(nazwa_pola).send_keys(text)
 
     def usuniecie_pierwszej_grupy(self):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
-        # szukamy pierwszej grupy i zaznaczamy
-        wd.find_element_by_name("selected[]").click()
+        self.wyszukaj_pierwsza_grupe()
         # szukamy przycisku usuń i klikamy
         wd.find_element_by_name("delete").click()
+
+    def wyszukaj_pierwsza_grupe(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
 
     def edycja_pierwszej_grupy(self, group):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
-        # szukamy pierwszej grupy i zaznaczamy
-        wd.find_element_by_name("selected[]").click()
+        self.wyszukaj_pierwsza_grupe()
+        # otwarcie edycji grupy
         wd.find_element_by_name("edit").click()
         self.wypelnienie_formularza_danymi_grupy(group)
         wd.find_element_by_name("update").click()
