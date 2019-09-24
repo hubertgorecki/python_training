@@ -12,7 +12,7 @@ fixture = None
 
 @pytest.fixture
 # Fixtura dla wszystkich testów. Dzięki temu nie musimy umieszczać oddzielnej fixtury w każdym tescie./
-def app(request):
+def app():
     global fixture
     if fixture is None:
         fixture = Application()
