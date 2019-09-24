@@ -68,7 +68,7 @@ class Kontakty:
         self.app.otwarcie_strony_glownej()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
-        wd.switch_to_alert().accept()
+        wd.switch_to.alert.accept()
         self.app.otwarcie_strony_glownej()
 
     def edycja_pierwszego_kontaktu(self, contact):
