@@ -9,6 +9,10 @@ class Grupy:
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
+    def otwiera_strone_z_grupami(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("groups").click()
+
     def utworzenie_nowej_grupy(self, group):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
@@ -52,8 +56,6 @@ class Grupy:
         wd.find_element_by_name("edit").click()
         self.wypelnienie_formularza_danymi_grupy(group)
         wd.find_element_by_name("update").click()
-        self.otwiera_strone_z_grupami()
+        self.powrot_na_strone_z_lista_grup()
 
-    def otwiera_strone_z_grupami(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+
