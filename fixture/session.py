@@ -21,7 +21,7 @@ class Sesja:
         wd.find_element_by_link_text("Logout").click()
 
     def czy_trzeba_sie_wylogowac(self):
-        # wd = self.app.wd
+        wd = self.app.wd
         if self.czy_zalogowany():
             self.wylogowanie()
 
@@ -34,7 +34,7 @@ class Sesja:
         return wd.find_element_by_xpath("//*[@id='top']/form/b").text == "(" + login + ")"
 
     def czy_trzeba_sie_zalogowac(self, login, haslo):
-        # wd = self.app.wd
+        wd = self.app.wd
         if self.czy_zalogowany():
             if self.czy_zalogowany_jako(login):
                 return

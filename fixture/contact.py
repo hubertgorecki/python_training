@@ -83,3 +83,8 @@ class Kontakty:
     def otworz_strone_dodaj_kontakt(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+
+    def licznik_checkboxow_kontakty(self):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        return len(wd.find_elements_by_name("selected[]"))

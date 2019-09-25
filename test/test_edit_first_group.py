@@ -4,5 +4,7 @@ from model.group import Group
 
 def test_edit_first_group(app):
     # app.session.zalogowanie(login="admin", haslo="secret")
+    if app.group.licznik_checkboxow_grupy() == 0:
+        app.group.utworzenie_nowej_grupy(Group(nazwa="testowagrupa", stopka="testowastopka"))
     app.group.edycja_pierwszej_grupy(Group(nazwa="nazwa", naglowek="nagłówek", stopka="stopka"))
     # app.session.wylogowanie()

@@ -58,4 +58,7 @@ class Grupy:
         wd.find_element_by_name("update").click()
         self.powrot_na_strone_z_lista_grup()
 
-
+    def licznik_checkboxow_grupy(self):
+        wd = self.app.wd
+        self.otwiera_strone_z_grupami()
+        return len(wd.find_elements_by_name("selected[]"))

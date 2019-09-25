@@ -1,8 +1,10 @@
 class Contact:
 
-    def __init__(self, imie, imie2, nazwisko, inicjaly, firma, zwrot, adres, tel_domowy, tel_komorkowy, tel_praca,
-                 adres_mail, adres_mail2, strona_domowa, dzien_urodzin, miesiac_urodzin, rok_urodzenia,
-                 alrternatywny_adres):
+    def __init__(self, imie=None, imie2=None, nazwisko=None, inicjaly=None, firma=None, zwrot=None, adres=None,
+                 tel_domowy=None, tel_komorkowy=None, tel_praca=None,
+                 adres_mail=None, adres_mail2=None, strona_domowa=None, dzien_urodzin=None, miesiac_urodzin=None,
+                 rok_urodzenia=None,
+                 alrternatywny_adres=None):
         self.imie = imie
         self.imie2 = imie2
         self.nazwisko = nazwisko
