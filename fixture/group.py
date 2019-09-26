@@ -5,12 +5,14 @@ class Grupy:
     def __init__(self, app):
         self.app = app
 
-    def powrot_na_strone_z_lista_grup(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+    # def powrot_na_strone_z_lista_grup(self):
+    #     wd = self.app.wd
+    #     wd.find_element_by_link_text("groups").click()
 
     def otwiera_strone_z_grupami(self):
         wd = self.app.wd
+        if wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0:
+            return
         wd.find_element_by_link_text("groups").click()
 
     def utworzenie_nowej_grupy(self, group):
@@ -21,7 +23,7 @@ class Grupy:
         self.wypelnienie_formularza_danymi_grupy(group)
         # Submit - Tworzymy nową grupę
         wd.find_element_by_name("submit").click()
-        self.powrot_na_strone_z_lista_grup()
+        self.otwiera_strone_z_grupami()
 
     def wypelnienie_formularza_danymi_grupy(self, group):
         wd = self.app.wd
@@ -56,7 +58,7 @@ class Grupy:
         wd.find_element_by_name("edit").click()
         self.wypelnienie_formularza_danymi_grupy(group)
         wd.find_element_by_name("update").click()
-        self.powrot_na_strone_z_lista_grup()
+        self.otwiera_strone_z_grupami()
 
     def licznik_checkboxow_grupy(self):
         wd = self.app.wd
