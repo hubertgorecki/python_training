@@ -61,8 +61,6 @@ class Kontakty:
     #     wd.find_element_by_name("address2").clear()
     #     wd.find_element_by_name("address2").send_keys(contact.adres_mail2)
 
-
-
     def wypelnienie_formularza_danymi_kontaktu(self, contact):
         wd = self.app.wd
         self.zmien_tresc_danego_pola_kontakty("firstname", contact.imie)

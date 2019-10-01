@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 
+
 def test_del_first_contact(app):
     # app.session.zalogowanie(login="admin", haslo="secret")
     if app.contact.licznik_checkboxow_kontakty() == 0:
