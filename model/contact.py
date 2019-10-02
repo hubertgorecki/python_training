@@ -4,7 +4,7 @@ class Contact:
                  tel_domowy=None, tel_komorkowy=None, tel_praca=None,
                  adres_mail=None, adres_mail2=None, strona_domowa=None, dzien_urodzin=None, miesiac_urodzin=None,
                  rok_urodzenia=None,
-                 alrternatywny_adres=None):
+                 alrternatywny_adres=None, id=None):
         self.imie = imie
         self.imie2 = imie2
         self.nazwisko = nazwisko
@@ -22,3 +22,4 @@ class Contact:
         self.miesiac_urodzin = miesiac_urodzin
         self.rok_urodzenia = rok_urodzenia
         self.alrternatywny_adres = alrternatywny_adres
+        self.id = id

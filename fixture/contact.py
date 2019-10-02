@@ -1,5 +1,5 @@
 from selenium.webdriver.support.ui import Select
-
+from model.contact import Contact
 
 class Kontakty:
     def __init__(self, app):
@@ -119,3 +119,14 @@ class Kontakty:
         wd = self.app.wd
         self.app.otwarcie_strony_glownej()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def zwroc_liste_kontaktow(self):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        kontakty = []
+        for element in wd.find_elements_by_name("entry"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            kontakty.append(Contact(imie=text, id=id))
+        return kontakty
+

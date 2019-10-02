@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from model.group import Group
 
 class Grupy:
     def __init__(self, app):
@@ -64,3 +65,15 @@ class Grupy:
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def zwroc_liste_grup(self):
+        wd = self.app.wd
+        self.otwiera_strone_z_grupami()
+        grupy = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            grupy.append(Group(nazwa=text, id=id))
+        return grupy
+
+
