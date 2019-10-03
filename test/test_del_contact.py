@@ -17,6 +17,8 @@ def test_del_first_contact(app):
     # przypisanie listy kontaktów po usunięciu pierwszego
     nowa_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
     # porównanie liczby kontaktów odejmując jeden od pierwotnej liczby, w ten sposób sprawdzimy czy usunięcie się powiodło.
-    assert len(stara_lista_kontaktow) -1 == len(nowa_lista_kontaktow)
+    assert len(stara_lista_kontaktow) - 1 == len(nowa_lista_kontaktow)
+    stara_lista_kontaktow[0:1] = []
+    assert stara_lista_kontaktow == nowa_lista_kontaktow
     # app.session.wylogowanie()
 

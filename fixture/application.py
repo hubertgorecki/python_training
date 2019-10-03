@@ -9,7 +9,7 @@ from fixture.contact import Kontakty
 class Application:
 
     def __init__(self):
-        self.wd = webdriver.Firefox()
+        self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(1)
         self.session = Sesja(self)
         self.group = Grupy(self)
