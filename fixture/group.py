@@ -25,6 +25,7 @@ class Grupy:
         # Submit - Tworzymy nową grupę
         wd.find_element_by_name("submit").click()
         self.otwiera_strone_z_grupami()
+        self.group_cache = None
 
     def wypelnienie_formularza_danymi_grupy(self, group):
         wd = self.app.wd
@@ -46,6 +47,7 @@ class Grupy:
         self.wyszukaj_pierwsza_grupe()
         # szukamy przycisku usuń i klikamy
         wd.find_element_by_name("delete").click()
+        self.group_cache = None
 
     def wyszukaj_pierwsza_grupe(self):
         wd = self.app.wd
@@ -60,20 +62,24 @@ class Grupy:
         self.wypelnienie_formularza_danymi_grupy(group)
         wd.find_element_by_name("update").click()
         self.otwiera_strone_z_grupami()
+        self.group_cache = None
 
     def licznik_checkboxow_grupy(self):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
         return len(wd.find_elements_by_name("selected[]"))
 
+    group_cache = None
+
     def zwroc_liste_grup(self):
-        wd = self.app.wd
-        self.otwiera_strone_z_grupami()
-        lista_grup = []
-        for element in wd.find_elements_by_css_selector("span.group"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            lista_grup.append(Group(nazwa=text, id=id))
-        return lista_grup
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.otwiera_strone_z_grupami()
+            self.group_cache = []
+            for element in wd.find_elements_by_css_selector("span.group"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.group_cache.append(Group(nazwa=text, id=id))
+        return self.group_cache
 
 
