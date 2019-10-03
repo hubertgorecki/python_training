@@ -69,11 +69,11 @@ class Grupy:
     def zwroc_liste_grup(self):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
-        grupy = []
+        lista_grup = []
         for element in wd.find_elements_by_css_selector("span.group"):
             text = element.text
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            grupy.append(Group(nazwa=text, id=id))
-        return grupy
+            lista_grup.append(Group(nazwa=text, id=id))
+        return lista_grup
 
 

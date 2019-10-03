@@ -10,7 +10,7 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(3)
+        self.wd.implicitly_wait(1)
         self.session = Sesja(self)
         self.group = Grupy(self)
         self.contact = Kontakty(self)

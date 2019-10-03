@@ -123,10 +123,11 @@ class Kontakty:
     def zwroc_liste_kontaktow(self):
         wd = self.app.wd
         self.app.otwarcie_strony_glownej()
-        kontakty = []
+        lista_kontaktow = []
         for element in wd.find_elements_by_name("entry"):
-            text = element.text
+            wiersz = element.find_elements_by_tag_name("td")
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            kontakty.append(Contact(imie=text, id=id))
-        return kontakty
-
+            nazwisko = wiersz[1].text
+            imie = wiersz[2].text
+            lista_kontaktow.append(Contact(imie=imie, nazwisko=nazwisko, id=id))
+        return lista_kontaktow
