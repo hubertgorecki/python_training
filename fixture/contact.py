@@ -11,6 +11,7 @@ class Kontakty:
         self.wypelnienie_formularza_danymi_kontaktu(contact)
         # zapisanie danych kontaktowych
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.contact_cache = None
 
     # def wypelnienie_danych_kontaktowych(self, contact):
     #     wd = self.app.wd
@@ -101,6 +102,7 @@ class Kontakty:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.app.otwarcie_strony_glownej()
+        self.contact_cache = None
 
     def edycja_pierwszego_kontaktu(self, contact):
         wd = self.app.wd
@@ -110,6 +112,7 @@ class Kontakty:
         self.wypelnienie_formularza_danymi_kontaktu(contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.app.otwarcie_strony_glownej()
+        self.contact_cache = None
 
     def otworz_strone_dodaj_kontakt(self):
         wd = self.app.wd
@@ -120,14 +123,18 @@ class Kontakty:
         self.app.otwarcie_strony_glownej()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def zwroc_liste_kontaktow(self):
-        wd = self.app.wd
-        self.app.otwarcie_strony_glownej()
-        lista_kontaktow = []
-        for element in wd.find_elements_by_name("entry"):
-            wiersz = element.find_elements_by_tag_name("td")
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            nazwisko = wiersz[1].text
-            imie = wiersz[2].text
-            lista_kontaktow.append(Contact(imie=imie, nazwisko=nazwisko, id=id))
-        return lista_kontaktow
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.otwarcie_strony_glownej()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                wiersz = element.find_elements_by_tag_name("td")
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                nazwisko = wiersz[1].text
+                imie = wiersz[2].text
+                self.contact_cache.append(Contact(imie=imie, nazwisko=nazwisko, id=id))
+
+        return list(self.contact_cache)
