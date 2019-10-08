@@ -42,9 +42,12 @@ class Grupy:
             wd.find_element_by_name(nazwa_pola).send_keys(text)
 
     def usuniecie_pierwszej_grupy(self):
+        self.usuniecie_grupy_z_indexem(0)
+
+    def usuniecie_grupy_z_indexem(self, index):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
-        self.wyszukaj_pierwsza_grupe()
+        self.wyszukaj_grupe_z_indexem(index)
         # szukamy przycisku usuń i klikamy
         wd.find_element_by_name("delete").click()
         self.group_cache = None
@@ -53,10 +56,17 @@ class Grupy:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
-    def edycja_pierwszej_grupy(self, group):
+    def wyszukaj_grupe_z_indexem(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def edycja_pierwszej_grupy(self):
+        self.edycja_grupy_z_indexem(0)
+
+    def edycja_grupy_z_indexem(self, group, index):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()
-        self.wyszukaj_pierwsza_grupe()
+        self.wyszukaj_grupe_z_indexem(index)
         # otwarcie edycji grupy
         wd.find_element_by_name("edit").click()
         self.wypelnienie_formularza_danymi_grupy(group)

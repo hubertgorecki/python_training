@@ -104,10 +104,29 @@ class Kontakty:
         self.app.otwarcie_strony_glownej()
         self.contact_cache = None
 
+    def usuniecie_losowego_kontaktu(self, index):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        self.app.otwarcie_strony_glownej()
+        self.contact_cache = None
+
     def edycja_pierwszego_kontaktu(self, contact):
         wd = self.app.wd
         self.app.otwarcie_strony_glownej()
         wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.wypelnienie_formularza_danymi_kontaktu(contact)
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.app.otwarcie_strony_glownej()
+        self.contact_cache = None
+
+    def edycja_losowego_kontaktu(self, contact, index):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.wypelnienie_formularza_danymi_kontaktu(contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
