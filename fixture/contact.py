@@ -158,7 +158,8 @@ class Kontakty:
                 imie = wiersz[2].text
                 wszystkie_telefony = wiersz[5].text.splitlines()
                 self.contact_cache.append(
-                    Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=wszystkie_telefony[0]))
+                    Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=wszystkie_telefony[0],
+                            tel_praca=wszystkie_telefony[2], tel_komorkowy=wszystkie_telefony[1]))
 
         return list(self.contact_cache)
 
@@ -186,4 +187,5 @@ class Kontakty:
         tel_komorkowy = wd.find_element_by_name("mobile").get_attribute("value")
         tel_praca = wd.find_element_by_name("work").get_attribute("value")
         tel_fax = wd.find_element_by_name("fax").get_attribute("value")
-        return Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=tel_domowy)
+        return Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=tel_domowy, tel_praca=tel_praca,
+                       tel_komorkowy=tel_komorkowy)
