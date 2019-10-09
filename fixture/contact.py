@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 
+
 class Kontakty:
     def __init__(self, app):
         self.app = app
@@ -74,6 +75,7 @@ class Kontakty:
         self.zmien_tresc_danego_pola_kontakty("home", contact.tel_domowy)
         self.zmien_tresc_danego_pola_kontakty("mobile", contact.tel_komorkowy)
         self.zmien_tresc_danego_pola_kontakty("work", contact.tel_praca)
+        self.zmien_tresc_danego_pola_kontakty("fax", contact.tel_fax)
         self.zmien_tresc_danego_pola_kontakty("email", contact.adres_mail)
         self.zmien_tresc_danego_pola_kontakty("email2", contact.adres_mail2)
         self.zmien_tresc_danego_pola_kontakty("homepage", contact.strona_domowa)
@@ -154,6 +156,34 @@ class Kontakty:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 nazwisko = wiersz[1].text
                 imie = wiersz[2].text
-                self.contact_cache.append(Contact(imie=imie, nazwisko=nazwisko, id=id))
+                wszystkie_telefony = wiersz[5].text.splitlines()
+                self.contact_cache.append(
+                    Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=wszystkie_telefony[0]))
 
         return list(self.contact_cache)
+
+    def otworz_edycje_kontaktu_o_indexie(self, index):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        wiersz = wd.find_elements_by_name("entry")[index]
+        komorka = wiersz.find_elements_by_tag_name("td")[7]
+        komorka.find_element_by_tag_name("a").click()
+
+    def otworz_podglad_kontaktu_o_indexie(self, index):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        wiersz = wd.find_elements_by_name("entry")[index]
+        komorka = wiersz.find_elements_by_tag_name("td")[6]
+        komorka.find_element_by_tag_name("a").click()
+
+    def info_o_konktakcie_w_edycji(self, index):
+        wd = self.app.wd
+        self.otworz_edycje_kontaktu_o_indexie(index)
+        imie = wd.find_element_by_name("firstname").get_attribute("value")
+        nazwisko = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        tel_domowy = wd.find_element_by_name("home").get_attribute("value")
+        tel_komorkowy = wd.find_element_by_name("mobile").get_attribute("value")
+        tel_praca = wd.find_element_by_name("work").get_attribute("value")
+        tel_fax = wd.find_element_by_name("fax").get_attribute("value")
+        return Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=tel_domowy)

@@ -5,7 +5,7 @@ from model.contact import Contact
 def test_add_contact(app):
     # app.session.zalogowanie(login="admin", haslo="secret")
     stara_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
-    kontakt = Contact(imie="A", nazwisko="BBBBBBBBBB", dzien_urodzin="12")
+    kontakt = Contact(imie="A", nazwisko="BBBBBBBBBB", dzien_urodzin="12", tel_fax="111111111111111111111111", tel_domowy="87598759875", tel_praca="12321", tel_komorkowy="09876")
     app.contact.wypelnij_dane_kontaktowe_i_zapisz(kontakt)
     nowa_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
     assert len(stara_lista_kontaktow) + 1 == len(nowa_lista_kontaktow)
