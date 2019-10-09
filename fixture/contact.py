@@ -1,6 +1,6 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
-
+import re
 
 class Kontakty:
     def __init__(self, app):
@@ -189,3 +189,12 @@ class Kontakty:
         tel_fax = wd.find_element_by_name("fax").get_attribute("value")
         return Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=tel_domowy, tel_praca=tel_praca,
                        tel_komorkowy=tel_komorkowy)
+
+    def info_o_konktakcie_w_podgladzie(self, index):
+        wd = self.app.wd
+        self.otworz_podglad_kontaktu_o_indexie(index)
+        text = wd.find_element_by_id("content").text
+        tel_domowy = re.search("H: (.*)", text).group(1)
+        tel_praca = re.search("W: (.*)", text).group(1)
+        tel_komorkowy = re.search("M: (.*)", text).group(1)
+        return Contact(tel_domowy=tel_domowy, tel_komorkowy=tel_komorkowy, tel_praca=tel_praca)
