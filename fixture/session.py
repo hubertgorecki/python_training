@@ -31,7 +31,11 @@ class Sesja:
 
     def czy_zalogowany_jako(self, login):
         wd = self.app.wd
-        return wd.find_element_by_xpath("//*[@id='top']/form/b").text == "(" + login + ")"
+        return self.zwraca_login_zalogowanego == login
+
+    def zwraca_login_zalogowanego(self):
+        wd = self.app.wd
+        return wd.find_element_by_xpath("//*[@id='top']/form/b").text[1:-1]
 
     def czy_trzeba_sie_zalogowac(self, login, haslo):
         wd = self.app.wd
