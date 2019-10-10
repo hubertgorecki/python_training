@@ -2,6 +2,7 @@ from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 import re
 
+
 class Kontakty:
     def __init__(self, app):
         self.app = app
@@ -158,8 +159,11 @@ class Kontakty:
                 nazwisko = wiersz[1].text
                 imie = wiersz[2].text
                 wszystkie_telefony = wiersz[5].text
+                adres = wiersz[3].text
+                wszystkie_adresy_mail = wiersz[4].text
                 self.contact_cache.append(
-                    Contact(imie=imie, nazwisko=nazwisko, id=id, wszystkie_tel_na_stronie_glownej=wszystkie_telefony))
+                    Contact(imie=imie, nazwisko=nazwisko, id=id, wszystkie_tel_na_stronie_glownej=wszystkie_telefony,
+                            adres=adres, wszystkie_adresy_mail=wszystkie_adresy_mail))
 
         return list(self.contact_cache)
 
@@ -188,8 +192,13 @@ class Kontakty:
         tel_praca = wd.find_element_by_name("work").get_attribute("value")
         tel_fax = wd.find_element_by_name("fax").get_attribute("value")
         tel_domowy2 = wd.find_element_by_name("phone2").get_attribute("value")
+        adres = wd.find_element_by_name("address").text
+        adres_mail = wd.find_element_by_name("email").get_attribute("value")
+        adres_mail2 = wd.find_element_by_name("email2").get_attribute("value")
+        adres_mail3 = wd.find_element_by_name("email3").get_attribute("value")
         return Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=tel_domowy, tel_praca=tel_praca,
-                       tel_komorkowy=tel_komorkowy, tel_domowy2=tel_domowy2)
+                       tel_komorkowy=tel_komorkowy, tel_domowy2=tel_domowy2, tel_fax=tel_fax, adres=adres,
+                       adres_mail=adres_mail, adres_mail2=adres_mail2, adres_mail3=adres_mail3)
 
     def info_o_konktakcie_w_podgladzie(self, index):
         wd = self.app.wd

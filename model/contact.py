@@ -5,10 +5,11 @@ class Contact:
 
     def __init__(self, imie=None, imie2=None, nazwisko=None, inicjaly=None, firma=None, zwrot=None, adres=None,
                  tel_domowy=None, tel_komorkowy=None, tel_praca=None, tel_fax=None,
-                 wszystkie_tel_na_stronie_glownej=None, adres_mail=None, adres_mail2=None, strona_domowa=None,
+                 wszystkie_tel_na_stronie_glownej=None, adres_mail=None, adres_mail2=None, adres_mail3=None, wszystkie_adresy_mail=None,
+                 strona_domowa=None,
                  dzien_urodzin=None, miesiac_urodzin=None,
                  rok_urodzenia=None,
-                 alrternatywny_adres=None, tel_domowy2 =None, id=None):
+                 alrternatywny_adres=None, tel_domowy2=None, id=None):
         self.imie = imie
         self.imie2 = imie2
         self.nazwisko = nazwisko
@@ -23,6 +24,8 @@ class Contact:
         self.wszystkie_tel_na_stronie_glownej = wszystkie_tel_na_stronie_glownej
         self.adres_mail = adres_mail
         self.adres_mail2 = adres_mail2
+        self.adres_mail3 = adres_mail3
+        self.wszystkie_adresy_mail = wszystkie_adresy_mail
         self.strona_domowa = strona_domowa
         self.dzien_urodzin = dzien_urodzin
         self.miesiac_urodzin = miesiac_urodzin
