@@ -83,6 +83,7 @@ class Kontakty:
         self.zmien_tresc_danego_pola_kontakty_listy("bmonth", contact.miesiac_urodzin)
         self.zmien_tresc_danego_pola_kontakty("byear", contact.rok_urodzenia)
         self.zmien_tresc_danego_pola_kontakty("address2", contact.alrternatywny_adres)
+        self.zmien_tresc_danego_pola_kontakty("phone2", contact.tel_domowy2)
 
     def zmien_tresc_danego_pola_kontakty_listy(self, nazwa_pola, text):
         wd = self.app.wd
@@ -156,10 +157,9 @@ class Kontakty:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 nazwisko = wiersz[1].text
                 imie = wiersz[2].text
-                wszystkie_telefony = wiersz[5].text.splitlines()
+                wszystkie_telefony = wiersz[5].text
                 self.contact_cache.append(
-                    Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=wszystkie_telefony[0],
-                            tel_praca=wszystkie_telefony[2], tel_komorkowy=wszystkie_telefony[1]))
+                    Contact(imie=imie, nazwisko=nazwisko, id=id, wszystkie_tel_na_stronie_glownej=wszystkie_telefony))
 
         return list(self.contact_cache)
 
@@ -187,8 +187,9 @@ class Kontakty:
         tel_komorkowy = wd.find_element_by_name("mobile").get_attribute("value")
         tel_praca = wd.find_element_by_name("work").get_attribute("value")
         tel_fax = wd.find_element_by_name("fax").get_attribute("value")
+        tel_domowy2 = wd.find_element_by_name("phone2").get_attribute("value")
         return Contact(imie=imie, nazwisko=nazwisko, id=id, tel_domowy=tel_domowy, tel_praca=tel_praca,
-                       tel_komorkowy=tel_komorkowy)
+                       tel_komorkowy=tel_komorkowy, tel_domowy2=tel_domowy2)
 
     def info_o_konktakcie_w_podgladzie(self, index):
         wd = self.app.wd
@@ -197,4 +198,5 @@ class Kontakty:
         tel_domowy = re.search("H: (.*)", text).group(1)
         tel_praca = re.search("W: (.*)", text).group(1)
         tel_komorkowy = re.search("M: (.*)", text).group(1)
-        return Contact(tel_domowy=tel_domowy, tel_komorkowy=tel_komorkowy, tel_praca=tel_praca)
+        tel_domowy2 = re.search("P: (.*)", text).group(1)
+        return Contact(tel_domowy=tel_domowy, tel_komorkowy=tel_komorkowy, tel_praca=tel_praca, tel_domowy2=tel_domowy2)
