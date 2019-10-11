@@ -1,26 +1,31 @@
 # -*- coding: utf-8 -*-
 
 from model.group import Group
+import pytest
+import random
 
+dane_testowe = [Group(nazwa=random.seed(10), naglowek="adsgasgdsajfa", stopka="ROPIHa"),
+                Group(nazwa="", naglowek="", stopka="")]
 
-def test_add_group(app):
-    # app.session.zalogowanie(login="admin", haslo="secret")
-    stara_lista_grup = app.group.zwroc_liste_grup()
-    group = Group(nazwa="aslkdkgajhsdlf", naglowek="adsgasgdsajfa", stopka="ROPIHa")
-    app.group.utworzenie_nowej_grupy(group)
-    # porównanie ilości list
-    assert len(stara_lista_grup)+1 == app.group.licznik_checkboxow_grupy()
-    # porównanie elementów listy
-    nowa_lista_grup = app.group.zwroc_liste_grup()
-    stara_lista_grup.append(group)
-    assert sorted(stara_lista_grup, key=Group.id_or_max) == sorted(nowa_lista_grup, key=Group.id_or_max)
-    # app.session.wylogowanie()
+#przekazanie danych testowych w charakterze parametru. Przekazujemy do parametru "group" dane z danet_testowe
+@pytest.mark.parametrize("group", dane_testowe)
 
+def test_add_group(app, group):
+    for group in dane_testowe:
+        pass
+        stara_lista_grup = app.group.zwroc_liste_grup()
+        # group = Group(nazwa="aslkdkgajhsdlf", naglowek="adsgasgdsajfa", stopka="ROPIHa")
+        app.group.utworzenie_nowej_grupy(group)
+        # porównanie ilości list
+        assert len(stara_lista_grup) + 1 == app.group.licznik_checkboxow_grupy()
+        # porównanie elementów listy
+        nowa_lista_grup = app.group.zwroc_liste_grup()
+        stara_lista_grup.append(group)
+        assert sorted(stara_lista_grup, key=Group.id_or_max) == sorted(nowa_lista_grup, key=Group.id_or_max)
 
 # def test_add_group2(app):
-#     # app.session.zalogowanie(login="admin", haslo="secret")
 #     stara_lista_grup = app.group.zwroc_liste_grup()
-#     group = Group(nazwa="nowa grupa", naglowek="coscos", stopka="malecos")
+#     group = Group(nazwa="", naglowek="", stopka="")
 #     app.group.utworzenie_nowej_grupy(group)
 #     #porównanie ilości list
 #     nowa_lista_grup = app.group.zwroc_liste_grup()
@@ -28,5 +33,3 @@ def test_add_group(app):
 #     #porównanie elementów listy
 #     stara_lista_grup.append(group)
 #     assert sorted(stara_lista_grup, key=Group.id_or_max) == sorted(nowa_lista_grup, key=Group.id_or_max)
-
-    # app.session.wylogowanie()
