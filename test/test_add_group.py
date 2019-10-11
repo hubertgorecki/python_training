@@ -12,7 +12,7 @@ def zwroc_ciag_znakow(prefix, maxlen):
 
 
 # zwraca losowe ciągi znaków dla nazwy, naglówków, stopek (5 razy pierwszą grupę generuje) + puste.
-dane_testowe = [Group(nazwa="", naglowek="", stopka="")] + [
+dane_testowe_grupy = [Group(nazwa="", naglowek="", stopka="")] + [
     Group(nazwa=zwroc_ciag_znakow("nazwa", 10), naglowek=zwroc_ciag_znakow("naglowek", 20),
           stopka=zwroc_ciag_znakow("stopka", 10)) for i in range(5)
 ]
@@ -26,7 +26,7 @@ dane_testowe = [Group(nazwa="", naglowek="", stopka="")] + [
 
 # przekazanie danych testowych w charakterze parametru. Przekazujemy do parametru "group" dane z dane_testowe
 
-@pytest.mark.parametrize("group", dane_testowe, ids=[repr(x) for x in dane_testowe])
+@pytest.mark.parametrize("group", dane_testowe_grupy, ids=[repr(x) for x in dane_testowe_grupy])
 def test_add_group(app, group):
     # pass
     stara_lista_grup = app.group.zwroc_liste_grup()
