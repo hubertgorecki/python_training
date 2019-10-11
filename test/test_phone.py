@@ -14,6 +14,7 @@ def test_telefonow_na_podgladzie_kontaktu(app):
     assert kontakt_z_podgladu_strony.tel_domowy == kontakt_ze_strony_edycji.tel_domowy
     assert kontakt_z_podgladu_strony.tel_komorkowy == kontakt_ze_strony_edycji.tel_komorkowy
     assert kontakt_z_podgladu_strony.tel_praca == kontakt_ze_strony_edycji.tel_praca
+    assert kontakt_z_podgladu_strony.tel_domowy2 == kontakt_ze_strony_edycji.tel_domowy2
 
 def test_porownanie_imie_nazwisko(app):
     kontakt_z_podgladu_strony = app.contact.zwroc_liste_kontaktow()[0]
@@ -32,6 +33,8 @@ def test_porownanie_adresow_mail(app):
     assert kontakt_z_podgladu_strony.wszystkie_adresy_mail == sklej_adresy_mail_widoczne_w_edycji(kontakt_ze_strony_edycji)
     print(kontakt_z_podgladu_strony.wszystkie_adresy_mail)
     print(sklej_adresy_mail_widoczne_w_edycji(kontakt_ze_strony_edycji))
+
+#czyści ciąg znaków z pustych znaków oraz z - spacji i nawiasów
 def czysc(s):
     return re.sub("[() -]", "", s)
 
