@@ -12,14 +12,19 @@ fixture = None
 
 @pytest.fixture
 # Fixtura dla wszystkich testów. Dzięki temu nie musimy umieszczać oddzielnej fixtury w każdym tescie./
-def app():
+def app(request):
     global fixture
+    # możliwość wyboru przeglarkiw  której uruchamia się testy, wpisania hasła i loginu oraz adresu bezpośrednio z konsoli
+    login = request.config.getoption("--login")
+    haslo = request.config.getoption("--haslo")
+    browser = request.config.getoption("--browser")
+    base_url = request.config.getoption("--baseUrl")
     if fixture is None:
-        fixture = Application()
+        fixture = Application(browser=browser, base_url=base_url)
     else:
         if not fixture.is_valid():
             fixture = Application()
-    fixture.session.czy_trzeba_sie_zalogowac(login="admin", haslo="secret")
+    fixture.session.czy_trzeba_sie_zalogowac(login=login, haslo=haslo)
     return fixture
 
 
@@ -31,3 +36,10 @@ def stop(request):
 
     request.addfinalizer(fin)
     return fixture
+
+
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="Chrome")
+    parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/")
+    parser.addoption("--login", action="store", default="admin")
+    parser.addoption("--haslo", action="store", default="secret")

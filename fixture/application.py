@@ -8,12 +8,20 @@ from fixture.contact import Kontakty
 
 class Application:
 
-    def __init__(self):
-        self.wd = webdriver.Chrome()
-        self.wd.implicitly_wait(1)
+    def __init__(self, browser, base_url):
+        if browser == "Chrome":
+            self.wd = webdriver.Chrome()
+        elif browser == "Firefox":
+            self.wd = webdriver.Firefox()
+        elif browser == "Edge":
+            self.wd = webdriver.Edge()
+        else:
+            raise ValueError("Nierozpoznana przeglądarka %s" % browser)
+        #self.wd.implicitly_wait(1)
         self.session = Sesja(self)
         self.group = Grupy(self)
         self.contact = Kontakty(self)
+        self.base_url = base_url
 
     def is_valid(self):
         try:
@@ -26,7 +34,7 @@ class Application:
         wd = self.wd
         if wd.current_url.endswith("http://localhost/addressbook/") and len(wd.find_elements_by_name("add")) > 0:
             return
-        wd.get("http://localhost/addressbook/")
+        wd.get(self.base_url)
 
     def destroy(self):
         self.wd.quit()
