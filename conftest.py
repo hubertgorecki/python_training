@@ -23,7 +23,7 @@ def app(request):
         fixture = Application(browser=browser, base_url=base_url)
     else:
         if not fixture.is_valid():
-            fixture = Application()
+            fixture = Application(browser=browser, base_url=base_url)
     fixture.session.czy_trzeba_sie_zalogowac(login=login, haslo=haslo)
     return fixture
 
