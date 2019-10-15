@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+import json
+import os.path
 from fixture.application import Application
 
 # scope = "session"  - jedno uruchomienie przegladarki i następnie uruchomienie testów.
@@ -8,23 +10,27 @@ from fixture.application import Application
 # @pytest.fixture(scope = "session")
 
 fixture = None
+target = None
 
 
 @pytest.fixture
 # Fixtura dla wszystkich testów. Dzięki temu nie musimy umieszczać oddzielnej fixtury w każdym tescie./
 def app(request):
+    # wskaczujemy żę planujemy wykorzystywać foxture i target
     global fixture
+    global target
     # możliwość wyboru przeglarkiw  której uruchamia się testy, wpisania hasła i loginu oraz adresu bezpośrednio z konsoli
-    login = request.config.getoption("--login")
-    haslo = request.config.getoption("--haslo")
     browser = request.config.getoption("--browser")
-    base_url = request.config.getoption("--baseUrl")
-    if fixture is None:
-        fixture = Application(browser=browser, base_url=base_url)
-    else:
-        if not fixture.is_valid():
-            fixture = Application(browser=browser, base_url=base_url)
-    fixture.session.czy_trzeba_sie_zalogowac(login=login, haslo=haslo)
+    # os.path.abspath wskazuje lokalizację - absolutną, os.path.dirname wskazuje katalog w którym ten plik się znajduje, os.path.join - przykleja lokalizację pliku configuracyjnego
+
+    if target is None:
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
+        # with - dzięki zastosowaniu tej formy nie musimy zamykać pliku. Automatycznie jest zamykany po przejściu całej metody/funkcji
+        with open(config_file) as f:
+            target = json.load(f)
+    if fixture is None or not fixture.is_valid():
+        fixture = Application(browser=browser, base_url=target["baseUrl"])
+    fixture.session.czy_trzeba_sie_zalogowac(login=target["login"], haslo=target["haslo"])
     return fixture
 
 
@@ -40,6 +46,6 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="Chrome")
-    parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/")
-    parser.addoption("--login", action="store", default="admin")
-    parser.addoption("--haslo", action="store", default="secret")
+    parser.addoption("--target", action="store", default="target.json")
+    # parser.addoption("--login", action="store", default="admin")
+    # parser.addoption("--haslo", action="store", default="secret")
