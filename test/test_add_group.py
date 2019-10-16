@@ -1,32 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from model.group import Group
 import pytest
-import random
-import string
+from data.groups import losowe_dane_testowe_grupy
 
-# zwraca losowo generowane łańcuchy
-def zwroc_ciag_znakow(prefix, maxlen):
-    ciag_znakow = string.ascii_letters + string.digits + string.punctuation + " "*10
-    return prefix + "".join([random.choice(ciag_znakow) for i in range(random.randrange(maxlen))])
-
-
-# zwraca losowe ciągi znaków dla nazwy, naglówków, stopek (5 razy pierwszą grupę generuje) + puste.
-dane_testowe_grupy = [Group(nazwa="", naglowek="", stopka="")] + [
-    Group(nazwa=zwroc_ciag_znakow("nazwa", 10), naglowek=zwroc_ciag_znakow("naglowek", 20),
-          stopka=zwroc_ciag_znakow("stopka", 10)) for i in range(5)
-]
-
-
-# zwraca losowe ciągi znaków dla nazwy, naglówków, stopek - ich kombinacje.
-# dane_testowe = [Group(nazwa=nazwa, naglowek=naglowek, stopka=stopka)
-#                 for nazwa in [" ", zwroc_ciag_znakow("nazwa",10)]
-#                 for naglowek in [" ", zwroc_ciag_znakow("naglowek", 10)]
-#                 for stopka in [" ", zwroc_ciag_znakow("stopka", 10)]]
 
 # przekazanie danych testowych w charakterze parametru. Przekazujemy do parametru "group" dane z dane_testowe
-
-@pytest.mark.parametrize("group", dane_testowe_grupy, ids=[repr(x) for x in dane_testowe_grupy])
+@pytest.mark.parametrize("group", losowe_dane_testowe_grupy, ids=[repr(x) for x in losowe_dane_testowe_grupy])
 def test_add_group(app, group):
     # pass
     stara_lista_grup = app.group.zwroc_liste_grup()
