@@ -6,8 +6,8 @@ import pytest
 
 # przekazanie danych testowych w charakterze parametru. Przekazujemy do parametru "group" dane z dane_testowe
 # @pytest.mark.parametrize("group", losowe_dane_testowe_grupy, ids=[repr(x) for x in losowe_dane_testowe_grupy])
-def test_add_group(app, data_groups):
-    group = data_groups
+def test_add_group(app, json_groups):
+    group = json_groups
     stara_lista_grup = app.group.zwroc_liste_grup()
     # group = Group(nazwa="aslkdkgajhsdlf", naglowek="adsgasgdsajfa", stopka="ROPIHa")
     app.group.utworzenie_nowej_grupy(group)

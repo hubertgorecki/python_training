@@ -3,7 +3,7 @@ from model.group import Group
 import random
 import string
 import os.path
-import json
+import jsonpickle
 import getopt
 import sys
 
@@ -38,4 +38,5 @@ losowe_dane_testowe_grupy = [Group(nazwa="", naglowek="", stopka="")] + [
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 #otwieramy plik do zapisu (tryb "w"), nastęnie ustawiamy  dict - przypsianie własciwości które są dostepne w model/group w __init_
 with open(file, "w") as out:
-    out.write(json.dumps(losowe_dane_testowe_grupy, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json", indent=2)
+    out.write(jsonpickle.encode(losowe_dane_testowe_grupy))
