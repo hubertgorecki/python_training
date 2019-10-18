@@ -5,7 +5,8 @@ class Contact:
 
     def __init__(self, imie=None, imie2=None, nazwisko=None, inicjaly=None, firma=None, zwrot=None, adres=None,
                  tel_domowy=None, tel_komorkowy=None, tel_praca=None, tel_fax=None,
-                 wszystkie_tel_na_stronie_glownej=None, adres_mail=None, adres_mail2=None, adres_mail3=None, wszystkie_adresy_mail=None,
+                 wszystkie_tel_na_stronie_glownej=None, adres_mail=None, adres_mail2=None, adres_mail3=None,
+                 wszystkie_adresy_mail=None,
                  strona_domowa=None,
                  dzien_urodzin=None, miesiac_urodzin=None,
                  rok_urodzenia=None,
@@ -35,7 +36,8 @@ class Contact:
         self.id = id
 
     def __repr__(self):
-        return "%s:%s:%s:%s:%s:%s" % (self.id, self.imie, self.nazwisko, self.adres_mail, self.strona_domowa, self.rok_urodzenia)
+        return "%s:%s:%s:%s:%s:%s" % (
+        self.id, self.imie, self.nazwisko, self.adres_mail, self.strona_domowa, self.rok_urodzenia)
 
     def __eq__(self, other):
         return (

@@ -4,6 +4,7 @@ import pytest
 import json
 import os.path
 import importlib
+import jsonpickle
 from fixture.application import Application
 
 # scope = "session"  - jedno uruchomienie przegladarki i następnie uruchomienie testów.
@@ -51,18 +52,22 @@ def pytest_addoption(parser):
     # parser.addoption("--login", action="store", default="admin")
     # parser.addoption("--haslo", action="store", default="secret")
 
+
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
             stale_dane_testowe = load_from_module(fixture[5:])
             metafunc.parametrize(fixture, stale_dane_testowe, ids=[str(x) for x in stale_dane_testowe])
-        elif:
-            if fixture.startswith("json_"):
-                stale_dane_testowe = load_from_json(fixture[5:])
-                metafunc.parametrize(fixture, stale_dane_testowe, ids=[str(x) for x in stale_dane_testowe])
+        elif fixture.startswith("json_"):
+            losowe_dane_testowe = load_from_json(fixture[5:])
+            metafunc.parametrize(fixture, losowe_dane_testowe, ids=[str(x) for x in losowe_dane_testowe])
+
 
 def load_from_module(module):
     return importlib.import_module("data.%s" % module).stale_dane_testowe
 
+
 def load_from_json(file):
-    return importlib.import_module("data.%s" % module).stale_dane_testowe
+    # wskazanie lokalizacji pliku, __file__ wskazuje miejsce pliku config, nastepnie wskazanie lokalizacji pliku w średnikach "")
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/%s.json" % file)) as f:
+        return jsonpickle.decode((f.read()))

@@ -1,4 +1,4 @@
-#generator grup
+# generator grup
 from model.group import Group
 import random
 import string
@@ -18,9 +18,10 @@ f = "data/groups.json"
 
 for o, a in opts:
     if o == "-n":
-        n =int(a)
+        n = int(a)
     elif o == "-f":
         f = a
+
 
 # zwraca losowo generowane łańcuchy
 def zwroc_ciag_znakow(prefix, maxlen):
@@ -34,9 +35,9 @@ losowe_dane_testowe_grupy = [Group(nazwa="", naglowek="", stopka="")] + [
           stopka=zwroc_ciag_znakow("stopka", 10)) for i in range(n)
 ]
 
-#określenie lokalizacji pliku w którym zapisujemy dane. ".." przejście z poziomu generatora o 2 wyzej, następnie przejście do ścieżki /data.groups.json"
+# określenie lokalizacji pliku w którym zapisujemy dane. ".." przejście z poziomu generatora o 2 wyzej, następnie przejście do ścieżki /data.groups.json"
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
-#otwieramy plik do zapisu (tryb "w"), nastęnie ustawiamy  dict - przypsianie własciwości które są dostepne w model/group w __init_
+# otwieramy plik do zapisu (tryb "w"), nastęnie ustawiamy  dict - przypsianie własciwości które są dostepne w model/group w __init_
 with open(file, "w") as out:
     jsonpickle.set_encoder_options("json", indent=2)
     out.write(jsonpickle.encode(losowe_dane_testowe_grupy))

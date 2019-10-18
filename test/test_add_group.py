@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-import pytest
+
+
 # from data.groups import losowe_dane_testowe_grupy
 
 

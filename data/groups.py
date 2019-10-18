@@ -3,18 +3,6 @@ from model.group import Group
 stale_dane_testowe = [Group(nazwa="nazwa1", naglowek="naglowek1", stopka="stopka1"),
                       Group(nazwa="nazwa2", naglowek="naglowek2", stopka="stopka2")]
 
-
-
-
-
-
-
-
-
-
-
-
-
 #
 # # zwraca losowo generowane łańcuchy
 # def zwroc_ciag_znakow(prefix, maxlen):
