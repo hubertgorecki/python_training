@@ -52,6 +52,14 @@ class Grupy:
         wd.find_element_by_name("delete").click()
         self.group_cache = None
 
+    def usuniecie_grupy_z_id(self, id):
+        wd = self.app.wd
+        self.otwiera_strone_z_grupami()
+        self.wyszukaj_grupe_z_id(id)
+        # szukamy przycisku usuń i klikamy
+        wd.find_element_by_name("delete").click()
+        self.group_cache = None
+
     def wyszukaj_pierwsza_grupe(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
@@ -59,6 +67,10 @@ class Grupy:
     def wyszukaj_grupe_z_indexem(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+    def wyszukaj_grupe_z_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def edycja_pierwszej_grupy(self):
         self.edycja_grupy_z_indexem(0)

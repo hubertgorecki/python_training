@@ -1,29 +1,18 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-from random import randrange
+import random
 
-# def test_del_first_group(app):
-#     # app.session.zalogowanie(login="admin", haslo="secret")
-#         if app.group.licznik_checkboxow_grupy() == 0:
-#         app.group.utworzenie_nowej_grupy(Group(nazwa="Specjalna"))
-#     stara_lista_grup = app.group.zwroc_liste_grup()
-#     app.group.usuniecie_pierwszej_grupy()
-#     nowa_lista_grup = app.group.zwroc_liste_grup()
-#     assert len(stara_lista_grup) - 1 == len(nowa_lista_grup)
-#     #usunięcie pierwszej listy i porównanie
-#     stara_lista_grup[0:1] = []
-#     assert stara_lista_grup == nowa_lista_grup
-#     # app.session.wylogowanie()
-
-def test_del_some_group(app):
+def test_del_some_group(app, db, check_ui):
     # app.session.zalogowanie(login="admin", haslo="secret")
-    if app.group.licznik_checkboxow_grupy() == 0:
+    if len(db.get_group_list()) == 0:
         app.group.utworzenie_nowej_grupy(Group(nazwa="Specjalna"))
-    stara_lista_grup = app.group.zwroc_liste_grup()
-    index = randrange(len(stara_lista_grup))
-    app.group.usuniecie_grupy_z_indexem(index)
-    nowa_lista_grup = app.group.zwroc_liste_grup()
-    assert len(stara_lista_grup) - 1 == len(nowa_lista_grup)
+    stara_lista_grup = db.get_group_list()
+    losowa_grupa = random.choice(stara_lista_grup)
+    app.group.usuniecie_grupy_z_id(losowa_grupa.id)
+    nowa_lista_grup = db.get_group_list()
+    #assert len(stara_lista_grup) - 1 == len(nowa_lista_grup)
     #usunięcie pierwszej listy i porównanie
-    stara_lista_grup[index:index+1] = []
-    assert stara_lista_grup == nowa_lista_grup
+    #stara_lista_grup.remove(losowa_grupa)
+    #assert stara_lista_grup == nowa_lista_grup
+    if check_ui:
+            assert sorted(nowa_lista_grup, key=Group.id_or_max) == sorted(app.group.zwroc_liste_grup(), key=Group.id_or_max)
