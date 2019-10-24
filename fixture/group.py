@@ -86,6 +86,17 @@ class Grupy:
         self.otwiera_strone_z_grupami()
         self.group_cache = None
 
+    def edycja_grupy_z_id(self, id, group):
+        wd = self.app.wd
+        self.otwiera_strone_z_grupami()
+        self.wyszukaj_grupe_z_id(id)
+        # otwarcie edycji grupy
+        wd.find_element_by_name("edit").click()
+        self.wypelnienie_formularza_danymi_grupy(group)
+        wd.find_element_by_name("update").click()
+        self.otwiera_strone_z_grupami()
+        self.group_cache = None
+
     def licznik_checkboxow_grupy(self):
         wd = self.app.wd
         self.otwiera_strone_z_grupami()

@@ -1,5 +1,6 @@
 import mysql.connector
 from model.group import Group
+from model.contact import Contact
 
 class DbFixture:
     def __init__(self, host, name, user, password):
@@ -7,7 +8,7 @@ class DbFixture:
         self.name = name
         self.user = user
         self.password = password
-        self.connection = mysql.connector.connect(host=host, database=name, user=user, password=password)
+        self.connection = mysql.connector.connect(host=host, database=name, user=user, password=password, autocommit=True)
 
     def get_group_list(self):
         cursor = self.connection.cursor()
@@ -17,6 +18,20 @@ class DbFixture:
             for row in cursor:
                 (id, name, header, footer) = row
                 list.append(Group(id=str(id), nazwa=name, naglowek=header, stopka=footer))
+
+        finally:
+            cursor.close()
+
+        return list
+
+    def get_contact_list(self):
+        cursor = self.connection.cursor()
+        list = []
+        try:
+            cursor.execute("select id, firstname, lastname from addressbook where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                (id, firstname, lastname) = row
+                list.append(Contact(id=str(id), imie=firstname, nazwisko=lastname))
 
         finally:
             cursor.close()

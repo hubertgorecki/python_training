@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
-from random import randrange
+import random
 
-def test_del_some_contact(app):
+
+def test_del_some_contact(app, db, check_ui):
     # app.session.zalogowanie(login="admin", haslo="secret")
-    if app.contact.licznik_checkboxow_kontakty() == 0:
+    if len(db.get_contact_list()) == 0:
         app.contact.wypelnij_dane_kontaktowe_i_zapisz(
             Contact(imie="Anna", imie2="Anka", nazwisko="Ankadaka", inicjaly="", firma="Japanaznajde",
                     zwrot="Jakiś",
@@ -12,19 +13,20 @@ def test_del_some_contact(app):
                     adres_mail="jjjjj@pl.pl", adres_mail2="JJJJJ.pl.pl", strona_domowa="", dzien_urodzin="1",
                     miesiac_urodzin="July", rok_urodzenia="1111", alrternatywny_adres=""))
     # przypisanie listy kontaktów przed usunięciem pierwszego z nich
-    stara_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
-    index = randrange(len(stara_lista_kontaktow))
-    app.contact.usuniecie_losowego_kontaktu(index)
+    stara_lista_kontaktow = db.get_contact_list()
+    losowy_kontakt = random.choice(stara_lista_kontaktow)
+    app.contact.usuniecie_losowego_kontaktu_id(losowy_kontakt.id)
     # przypisanie listy kontaktów po usunięciu pierwszego
-    nowa_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
+    nowa_lista_kontaktow = db.get_contact_list()
     # porównanie liczby kontaktów odejmując jeden od pierwotnej liczby, w ten sposób sprawdzimy czy usunięcie się powiodło.
     assert len(stara_lista_kontaktow) - 1 == len(nowa_lista_kontaktow)
-    stara_lista_kontaktow[index:index+1] = []
-    assert stara_lista_kontaktow == nowa_lista_kontaktow
+    if check_ui:
+        assert len(stara_lista_kontaktow) - 1 == len(app.contact.zwroc_liste_kontaktow())
 
-def test_del_first_contact(app):
+
+def test_del_first_contact(app, db, check_ui):
     # app.session.zalogowanie(login="admin", haslo="secret")
-    if app.contact.licznik_checkboxow_kontakty() == 0:
+    if len(db.get_contact_list()) == 0:
         app.contact.wypelnij_dane_kontaktowe_i_zapisz(
             Contact(imie="Anna", imie2="Anka", nazwisko="Ankadaka", inicjaly="", firma="Japanaznajde",
                     zwrot="Jakiś",
@@ -32,13 +34,11 @@ def test_del_first_contact(app):
                     adres_mail="jjjjj@pl.pl", adres_mail2="JJJJJ.pl.pl", strona_domowa="", dzien_urodzin="1",
                     miesiac_urodzin="July", rok_urodzenia="1111", alrternatywny_adres=""))
     # przypisanie listy kontaktów przed usunięciem pierwszego z nich
-    stara_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
+    stara_lista_kontaktow = db.get_contact_list()
     app.contact.usuniecie_pierwszego_kontaktu()
     # przypisanie listy kontaktów po usunięciu pierwszego
-    nowa_lista_kontaktow = app.contact.zwroc_liste_kontaktow()
+    nowa_lista_kontaktow = db.get_contact_list()
     # porównanie liczby kontaktów odejmując jeden od pierwotnej liczby, w ten sposób sprawdzimy czy usunięcie się powiodło.
     assert len(stara_lista_kontaktow) - 1 == len(nowa_lista_kontaktow)
-    stara_lista_kontaktow[0:1] = []
-    assert stara_lista_kontaktow == nowa_lista_kontaktow
-    # app.session.wylogowanie()
-
+    if check_ui:
+        assert len(stara_lista_kontaktow) - 1 == len(app.contact.zwroc_liste_kontaktow())

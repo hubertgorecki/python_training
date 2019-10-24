@@ -12,7 +12,7 @@ def test_del_some_group(app, db, check_ui):
     nowa_lista_grup = db.get_group_list()
     #assert len(stara_lista_grup) - 1 == len(nowa_lista_grup)
     #usunięcie pierwszej listy i porównanie
-    #stara_lista_grup.remove(losowa_grupa)
-    #assert stara_lista_grup == nowa_lista_grup
+    stara_lista_grup.remove(losowa_grupa)
+    assert stara_lista_grup == nowa_lista_grup
     if check_ui:
             assert sorted(nowa_lista_grup, key=Group.id_or_max) == sorted(app.group.zwroc_liste_grup(), key=Group.id_or_max)

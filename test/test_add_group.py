@@ -2,22 +2,19 @@
 from model.group import Group
 
 
-# from data.groups import losowe_dane_testowe_grupy
-
-
-# przekazanie danych testowych w charakterze parametru. Przekazujemy do parametru "group" dane z dane_testowe
-# @pytest.mark.parametrize("group", losowe_dane_testowe_grupy, ids=[repr(x) for x in losowe_dane_testowe_grupy])
-def test_add_group(app, json_groups):
+def test_add_group(app, db, json_groups, check_ui):
     group = json_groups
-    stara_lista_grup = app.group.zwroc_liste_grup()
+    stara_lista_grup = db.get_group_list()
     # group = Group(nazwa="aslkdkgajhsdlf", naglowek="adsgasgdsajfa", stopka="ROPIHa")
     app.group.utworzenie_nowej_grupy(group)
     # porównanie ilości list
-    assert len(stara_lista_grup) + 1 == app.group.licznik_checkboxow_grupy()
+    #assert len(stara_lista_grup) + 1 == len(db.get_group_list())
     # porównanie elementów listy
-    nowa_lista_grup = app.group.zwroc_liste_grup()
+    nowa_lista_grup = db.get_group_list()
     stara_lista_grup.append(group)
     assert sorted(stara_lista_grup, key=Group.id_or_max) == sorted(nowa_lista_grup, key=Group.id_or_max)
+    if check_ui:
+            assert sorted(nowa_lista_grup, key=Group.id_or_max) == sorted(app.group.zwroc_liste_grup(), key=Group.id_or_max)
 
 # def test_add_group2(app):
 #     stara_lista_grup = app.group.zwroc_liste_grup()
