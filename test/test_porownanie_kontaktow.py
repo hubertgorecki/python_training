@@ -1,13 +1,42 @@
 import re
+import random
+from model.contact import Contact
 
+def test_wszystkie_kontakty_glowna_vs_db(app, db):
+    lista_kontaktow_poglad = app.contact.zwroc_liste_kontaktow()
+    lista_kontaktow_bd = db.get_contact_list()
+    assert len(lista_kontaktow_poglad) == len(lista_kontaktow_bd)
 
-def test_telefonow_na_stronie_glownej(app):
-    kontakt_ze_strony_glownej = app.contact.zwroc_liste_kontaktow()[0]
-    kontakt_ze_strony_edycji = app.contact.info_o_konktakcie_w_edycji(0)
-    assert kontakt_ze_strony_glownej.wszystkie_tel_na_stronie_glownej == sklej_tel_widoczne_w_edycji(
-        kontakt_ze_strony_edycji)
-
-
+# #tu zaczynam zmieniać
+# def test_telefonow_na_stronie_glownej(app, db):
+#     lista_kontaktow_bd = db.get_contact_list()
+#     losowy_kontakt = random.choice(lista_kontaktow_bd)
+#     kontakt_ze_strony_glownej = zwroc_kontakt_o_id(losowy_kontakt.id)
+#     lista_kontaktow_bd = db.get_contact_list()[losowy_kontakt]
+#     assert kontakt_ze_strony_glownej.wszystkie_tel_na_stronie_glownej == sklej_tel_widoczne_w_edycji(
+#         kontakt_ze_strony_edycji)
+#
+# def zwroc_kontakt_o_id(self, id_wylosowanego_kontaktu):
+#     if self.contact_cache is None:
+#         wd = self.app.wd
+#         self.app.otwarcie_strony_glownej()
+#         self.contact_cache = []
+#         for element in wd.find_elements_by_name("entry"):
+#             wiersz = element.find_elements_by_tag_name("td")
+#             id = element.find_element_by_css_selector("input[value='%s']" % id_wylosowanego_kontaktu).click()
+#             nazwisko = wiersz[1].text
+#             imie = wiersz[2].text
+#             wszystkie_telefony = wiersz[5].text
+#             adres = wiersz[3].text
+#             wszystkie_adresy_mail = wiersz[4].text
+#             self.contact_cache.append(
+#                 Contact(imie=imie, nazwisko=nazwisko, id=id, wszystkie_tel_na_stronie_glownej=wszystkie_telefony,
+#                         adres=adres, wszystkie_adresy_mail=wszystkie_adresy_mail))
+#
+#     return list(self.contact_cache)
+#
+#
+# #tu kończę zmieniać
 def test_telefonow_na_podgladzie_kontaktu(app):
     kontakt_z_podgladu_strony = app.contact.info_o_konktakcie_w_podgladzie(0)
     kontakt_ze_strony_edycji = app.contact.info_o_konktakcie_w_edycji(0)

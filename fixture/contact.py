@@ -186,6 +186,7 @@ class Kontakty:
 
         return list(self.contact_cache)
 
+
     def otworz_edycje_kontaktu_o_indexie(self, index):
         wd = self.app.wd
         self.app.otwarcie_strony_glownej()

@@ -2,13 +2,15 @@ import mysql.connector
 from model.group import Group
 from model.contact import Contact
 
+
 class DbFixture:
     def __init__(self, host, name, user, password):
         self.host = host
         self.name = name
         self.user = user
         self.password = password
-        self.connection = mysql.connector.connect(host=host, database=name, user=user, password=password, autocommit=True)
+        self.connection = mysql.connector.connect(host=host, database=name, user=user, password=password,
+                                                  autocommit=True)
 
     def get_group_list(self):
         cursor = self.connection.cursor()
@@ -28,10 +30,19 @@ class DbFixture:
         cursor = self.connection.cursor()
         list = []
         try:
-            cursor.execute("select id, firstname, lastname, from addressbook where deprecated='0000-00-00 00:00:00'")
+            cursor.execute(
+                "select id, firstname, middlename, lastname, nickname, company, title, address, home, mobile, work,"
+                " fax, email, email2, homepage, bday, bmonth, byear, phone2"
+                " from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:
-                (id, firstname, lastname) = row
-                list.append(Contact(id=str(id), imie=firstname, nazwisko=lastname))
+                (id, firstname, middlename, lastname, nickname, company, title, address, home, mobile, work, fax, email,
+                 email2, homepage, bday, bmonth, byear, phone2) = row
+                list.append(Contact(id=str(id), imie=firstname, imie2=middlename, nazwisko=lastname, inicjaly=nickname,
+                                    firma=company, zwrot=title, adres=address, tel_domowy=home, tel_komorkowy=mobile,
+                                    tel_praca=work,
+                                    tel_fax=fax, adres_mail=email, adres_mail2=email2, strona_domowa=homepage,
+                                    dzien_urodzin=bday, miesiac_urodzin=bmonth, rok_urodzenia=byear,
+                                    tel_domowy2=phone2))
 
         finally:
             cursor.close()
