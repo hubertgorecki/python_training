@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 import re
+import webbrowser
 
 
 class Kontakty:
@@ -229,3 +230,24 @@ class Kontakty:
         tel_komorkowy = re.search("M: (.*)", text).group(1)
         tel_domowy2 = re.search("P: (.*)", text).group(1)
         return Contact(tel_domowy=tel_domowy, tel_komorkowy=tel_komorkowy, tel_praca=tel_praca, tel_domowy2=tel_domowy2)
+
+    def dodaj_losowy_kontakt_id_do_losowej_grupy(self, id_wylosowanego_kontaktu, nazwa_wylosowanej_grupy):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        wd.find_element_by_css_selector("input[value='%s']" % id_wylosowanego_kontaktu).click()
+        wd.find_element_by_name("to_group").click()
+        Select(wd.find_element_by_name("to_group")).select_by_visible_text(nazwa_wylosowanej_grupy)
+        wd.find_element_by_xpath("(//input[@name='add'])").click()
+
+    def usun_losowy_kontakt_id_z_losowej_grupy(self, id_wylosowanego_kontaktu_z_grup_kontaktow, id_grupy_kontaktow):
+        wd = self.app.wd
+        self.app.otwarcie_strony_glownej()
+        # webbrowser.open('http://localhost/addressbook/?group='+id_wylosowanego_kontaktu_z_grup_kontaktow)
+        # pass
+        # adres_www = 'http://localhost/addressbook/?group=%s' % (str(id_wylosowanego_kontaktu_z_grup_kontaktow))
+        # print(adres_www)
+
+        wd.get('http://localhost/addressbook/?group=%s' % (str(id_grupy_kontaktow)))
+       #wd.current_url.endswith('http://localhost/addressbook/?group=%s' % (str(id_grupy_kontaktow)))
+        wd.find_element_by_css_selector("input[value='%s']" % id_wylosowanego_kontaktu_z_grup_kontaktow).click()
+        wd.find_element_by_name("remove").click()

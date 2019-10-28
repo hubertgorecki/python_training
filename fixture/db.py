@@ -1,6 +1,7 @@
 import mysql.connector
 from model.group import Group
 from model.contact import Contact
+from model.address_in_groups import AddressInGroups
 
 
 class DbFixture:
@@ -43,6 +44,21 @@ class DbFixture:
                                     tel_fax=fax, adres_mail=email, adres_mail2=email2, strona_domowa=homepage,
                                     dzien_urodzin=bday, miesiac_urodzin=bmonth, rok_urodzenia=byear,
                                     tel_domowy2=phone2))
+
+        finally:
+            cursor.close()
+
+        return list
+
+    def get_contact_in_groups_list(self):
+        cursor = self.connection.cursor()
+        list = []
+        try:
+            cursor.execute(
+                "select id, group_id from address_in_groups where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                (id, group_id) = row
+                list.append(AddressInGroups(id=str(id), group_id=str(group_id)))
 
         finally:
             cursor.close()
