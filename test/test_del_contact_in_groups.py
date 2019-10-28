@@ -17,12 +17,9 @@ def test_del_contact_in_group(app, db):
         app.group.utworzenie_nowej_grupy(Group(nazwa="testowagrupa", stopka="testowastopka"))
     if len(db.get_contact_in_groups_list()) == 0:
         test_add_contact_to_group(app, db)
-    # lista_kontaktow = db.get_contact_list()
-    # losowy_kontakt = random.choice(lista_kontaktow)
-    # lista_grup = db.get_group_list()
-    # losowa_grupa = random.choice(lista_grup)
     stara_lista_kontaktow_w_grupie = db.get_contact_in_groups_list()
     losowy_kontakt_grupy_kontaktow = random.choice(stara_lista_kontaktow_w_grupie)
-    app.contact.usun_losowy_kontakt_id_z_losowej_grupy(losowy_kontakt_grupy_kontaktow.id, losowy_kontakt_grupy_kontaktow.group_id)
+    app.contact.usun_losowy_kontakt_id_z_losowej_grupy(losowy_kontakt_grupy_kontaktow.id,
+                                                       losowy_kontakt_grupy_kontaktow.group_id)
     nowa_lista_kontaktow_w_grupie = db.get_contact_in_groups_list()
     assert len(stara_lista_kontaktow_w_grupie) - 1 == len(nowa_lista_kontaktow_w_grupie)

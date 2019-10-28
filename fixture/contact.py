@@ -1,7 +1,6 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 import re
-import webbrowser
 
 
 class Kontakty:
@@ -187,7 +186,6 @@ class Kontakty:
 
         return list(self.contact_cache)
 
-
     def otworz_edycje_kontaktu_o_indexie(self, index):
         wd = self.app.wd
         self.app.otwarcie_strony_glownej()
@@ -242,12 +240,6 @@ class Kontakty:
     def usun_losowy_kontakt_id_z_losowej_grupy(self, id_wylosowanego_kontaktu_z_grup_kontaktow, id_grupy_kontaktow):
         wd = self.app.wd
         self.app.otwarcie_strony_glownej()
-        # webbrowser.open('http://localhost/addressbook/?group='+id_wylosowanego_kontaktu_z_grup_kontaktow)
-        # pass
-        # adres_www = 'http://localhost/addressbook/?group=%s' % (str(id_wylosowanego_kontaktu_z_grup_kontaktow))
-        # print(adres_www)
-
         wd.get('http://localhost/addressbook/?group=%s' % (str(id_grupy_kontaktow)))
-       #wd.current_url.endswith('http://localhost/addressbook/?group=%s' % (str(id_grupy_kontaktow)))
         wd.find_element_by_css_selector("input[value='%s']" % id_wylosowanego_kontaktu_z_grup_kontaktow).click()
         wd.find_element_by_name("remove").click()
